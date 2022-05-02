@@ -1,5 +1,14 @@
 # struct
 
+- [struct](#struct)
+  - [定义 struct](#定义-struct)
+  - [Tuple struct](#tuple-struct)
+  - [Unit-Like Struct 没有任何字段](#unit-like-struct-没有任何字段)
+  - [struct 数据的所有权](#struct-数据的所有权)
+  - [struct 方法](#struct-方法)
+    - [关联函数](#关联函数)
+    - [多个 impl 块](#多个-impl-块)
+
 1. struct 结构体，自定义的数据类型，为相关联的值命名，打包 => 有意义的组合。
 
 ## 定义 struct
@@ -119,3 +128,105 @@
 1. 以前边的 User struct 为例，其中的字段使用 String 而不是 &str，则表示 User struct 拥有全部的字段所有权。
    - 只要 struct 实例是有效的，那么里面的字段数据也是有效的。
 2. struct 里也可以存放引用，但这需要使用生命周期。
+
+## struct 方法
+
+1. 方法和函数类似：fn 关键字、名称、参数、返回值。
+2. 方法与函数不同：
+
+   - 方法是在 struct （或 enum、trait 对象）的上下文中定义。
+   - 第一个参数是 self，表示方法被调用的 struct 实例。
+
+   ```rust
+    #[derive(Debug)]
+    struct Rectangle {
+        width: u32,
+        length: u32,
+    }
+
+    impl Rectangle {
+        fn area(&self) -> u32 {
+            self.width * self.length
+        }
+    }
+
+    fn main() {
+        let rect = Rectangle {
+            width: 30,
+            length: 50,
+        };
+
+        println!("{}", rect.area());
+
+        println!("{:#?}", rect);
+    }
+
+   ```
+
+3. 在 impl 块里定义方法，方法的第一个参数可以是 &self，也可以获得其所有权或可变借用。和其他参数一样。同样可以获得更良好的代码组织。
+
+4. 方法参数，与普通函数类似任意携带：
+
+   ```rust
+   impl Rectangle {
+       fn area(&self) -> u32 {
+           self.width * self.length
+       }
+
+       fn can_hold(&self, other: &Rectangle) -> bool {
+           self.width > other.width && self.length > other.length
+       }
+   }
+   ```
+
+### 关联函数
+
+1. 可以在 impl 块里定义不把 self 作为第一个参数的函数名，它们叫关联函数（不是方法），例如 `String::from()`。
+2. 关联函数通常用于构造器。
+
+   ```rust
+   impl Rectangle {
+       fn area(&self) -> u32 {
+           self.width * self.length
+       }
+
+       fn can_hold(&self, other: &Rectangle) -> bool {
+           self.width > other.width && self.length > other.length
+       }
+
+       fn square(size: u32) -> Rectangle {
+           Rectangle {
+               width: size,
+               length: size,
+           }
+       }
+   }
+
+   let s = Rectangle::square(20);
+   println!("{:#?}", s);
+   ```
+
+### 多个 impl 块
+
+1. 每个 struct 允许拥有多个 impl 块。
+
+```rust
+impl Rectangle {
+    fn area(&self) -> u32 {
+        self.width * self.length
+    }
+}
+
+impl Rectangle {
+    fn can_hold(&self, other: &Rectangle) -> bool {
+        self.width > other.width && self.length > other.length
+    }
+
+    fn square(size: u32) -> Rectangle {
+        Rectangle {
+            width: size,
+            length: size,
+        }
+    }
+}
+```
