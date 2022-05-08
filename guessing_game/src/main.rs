@@ -4,7 +4,7 @@ use std::{cmp::Ordering, io};
 fn main() {
     println!("猜数游戏！");
 
-    let secret_number = rand::thread_rng().gen_range(1..101); // i32 u32 i64
+    let secret_number = rand::thread_rng().gen_range(1..101);
     println!("随机数为: {}", secret_number);
 
     loop {
@@ -34,4 +34,6 @@ fn main() {
             }
         }
     }
+    let now = "sss";
+    println!("{}", now);
 }
