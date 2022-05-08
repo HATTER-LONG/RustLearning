@@ -1,5 +1,25 @@
 # Package、Crate and Module
 
+- [Package、Crate and Module](#packagecrate-and-module)
+  - [Rust 的代码组织](#rust-的代码组织)
+  - [Package 和 Crate](#package-和-crate)
+    - [Cargo 的惯例](#cargo-的惯例)
+  - [定义 module 来控制作用域与私有性](#定义-module-来控制作用域与私有性)
+  - [路径](#路径)
+  - [私有边界 privacy boundary](#私有边界-privacy-boundary)
+    - [pub 关键字](#pub-关键字)
+    - [super 关键字](#super-关键字)
+    - [pub struct](#pub-struct)
+    - [pub enum](#pub-enum)
+  - [use 关键字](#use-关键字)
+    - [use 的习惯用法](#use-的习惯用法)
+    - [as 关键字](#as-关键字)
+    - [使用 pub use 重新导出名称](#使用-pub-use-重新导出名称)
+  - [package](#package)
+    - [使用嵌套路径清理大量的 use 语句](#使用嵌套路径清理大量的-use-语句)
+    - [通配符 \*](#通配符-)
+  - [如何将模块拆分为不同的文件](#如何将模块拆分为不同的文件)
+
 ## Rust 的代码组织
 
 1. 代码组织主要包括：
@@ -129,7 +149,7 @@ mod front_of_house {
 
 ### pub struct
 
-1. pub 放在 struct 前:
+1. pub 放在 struct 前：
    - struct 是公共的。
    - struct 中默认的字段都是私有的。
    - 在 struct 中的字段需要单独设置 pub 来变成公共的。
@@ -180,19 +200,19 @@ mod demo {
 1. 可以使用 use 关键字将路径导入到作用域内：
    - 仍遵循私有性规则。
 
-```rust
-mod use_demo {
-    pub mod hosting {
-        pub fn add_waitlist() {}
+    ```rust
+    mod use_demo {
+        pub mod hosting {
+            pub fn add_waitlist() {}
+        }
     }
-}
 
-use crate::use_demo::hosting;
+    use crate::use_demo::hosting;
 
-pub fn eat_somgthing() {
-    hosting::add_waitlist();
-}
-```
+    pub fn eat_somgthing() {
+        hosting::add_waitlist();
+    }
+    ```
 
 2. 也可以用 use 来引用相对路径。
 
