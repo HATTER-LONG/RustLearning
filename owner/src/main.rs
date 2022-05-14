@@ -84,7 +84,7 @@ fn test5() {
 fn test6() {
     let r = dangle();
 }
-fn dangle() -> &String{
+fn dangle() -> &String {
     let s = String::from("Hello");
     &s
 }
