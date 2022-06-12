@@ -1,5 +1,20 @@
 # Cargo 与 crates.io
 
+- [Cargo 与 crates.io](#cargo-与-cratesio)
+  - [前言](#前言)
+  - [通过 release profile 来自定义构建](#通过-release-profile-来自定义构建)
+    - [自定义 profile](#自定义-profile)
+  - [发布库到 crates.io](#发布库到-cratesio)
+    - [文档注释](#文档注释)
+    - [常用章节](#常用章节)
+    - [文档注释作为测试](#文档注释作为测试)
+    - [为包含注释的项添加文档注释](#为包含注释的项添加文档注释)
+  - [pub use](#pub-use)
+  - [发布 crate](#发布-crate)
+  - [Cargo 工作空间](#cargo-工作空间)
+    - [创建工作空间](#创建工作空间)
+    - [在工作空间中依赖外部 crate](#在工作空间中依赖外部-crate)
+
 ## 前言
 
 本章主要内容：
@@ -25,7 +40,7 @@
 - 针对每个 profile，Cargo 都提供来默认的配置。
 - 如果想要自定义 xxx profile 的配置：
   - 可以在 Cargo.toml 里添加 [profile.xxx] 区域，在里面覆盖默认配置子集。
-  - 对于每个配置的默认值和完整选项，详见[官方文档](https://doc.rust-lang.org/cargo/reference/profiles.html)。
+  - 对于每个配置的默认值和完整选项，详见 [官方文档](https://doc.rust-lang.org/cargo/reference/profiles.html)。
 
 ```toml
 [profile.dev]
@@ -38,7 +53,7 @@ opt-level = 3
 ## 发布库到 crates.io
 
 - 可以通过发布包来共享你的代码。
-- crate 的[注册表](https://crates.io/)：
+- crate 的 [注册表](https://crates.io/)：
   - 他会分发已注册的包的源代码。
   - 主要托管开源的代码。
 
